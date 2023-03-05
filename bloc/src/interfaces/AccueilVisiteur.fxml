@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="borderPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1016.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AccueilVisiteur">
+   <top>
+      <Pane prefHeight="150.0" prefWidth="1920.0" style="-fx-background-color: #5FC2BA;" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="840.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annuaire">
+               <font>
+                  <Font name="Arial" size="60.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="866.0" prefWidth="264.0" style="-fx-background-color: #3B556D;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="boutonEmployer" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#boutonEmployerClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" stylesheets="@../application/application.css" text="Employés" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonSites" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#boutonSitesClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Sites" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Service" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <TableView fx:id="tableEmployer" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="tableEmployerNom" prefWidth="197.0" text="Nom" />
+          <TableColumn fx:id="tableEmployerPrenom" prefWidth="169.0" text="Prenom" />
+            <TableColumn fx:id="tableEmployerFixe" prefWidth="329.0" text="Téléphone fixe" />
+            <TableColumn fx:id="tableEmployerPortable" prefWidth="230.0" text="Téléphone portable" />
+            <TableColumn fx:id="tableEmployerEmail" prefWidth="324.0" text="Email" />
+            <TableColumn fx:id="tableEmployerService" prefWidth="172.0" text="Service" />
+            <TableColumn fx:id="tableEmployerSite" prefWidth="234.0" text="Site" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

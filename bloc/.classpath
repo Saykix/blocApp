@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="C:/Users/Wayan/Downloads/jackson/jackson/jackson-core-2.14.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Wayan/Downloads/jackson/jackson/jackson-databind-2.14.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX19"/>
+	<classpathentry kind="lib" path="C:/Users/Wayan/java/libs/json-20220924.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,1 +1,9 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.Bouton {
+	-fx-background-color:  #0B162C
+}
+	
+.Bouton:hover {
+	-fx-background-color:  #1C2942
+}
+	
