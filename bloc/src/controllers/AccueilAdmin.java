@@ -23,11 +23,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class AccueilVisiteur implements Initializable{
+public class AccueilAdmin implements Initializable{
 	private Parent fxml;
 
 	  @FXML
 	    private BorderPane borderPaneMain;
+
+	    @FXML
+	    private Button boutonAjouter;
 
 	    @FXML
 	    private Button boutonEmployer;
@@ -61,10 +64,26 @@ public class AccueilVisiteur implements Initializable{
 
 	    @FXML
 	    private TableColumn<employer, String> tableEmployerSite;
-
+	    
+	    @FXML
+	    void boutonAjouterClick(MouseEvent event) {
+	    	try {
+				fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdminAjouter.fxml"));
+				borderPaneMain.getChildren().removeAll();
+				borderPaneMain.getChildren().setAll(fxml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+	    }
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
-
+	    	try {
+				fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdminAjouter.fxml"));
+				borderPaneMain.getChildren().removeAll();
+				borderPaneMain.getChildren().setAll(fxml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
 	    }
 
 	    @FXML
@@ -95,7 +114,7 @@ public class AccueilVisiteur implements Initializable{
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
 	            borderPaneMain.getChildren().removeAll();
 	            borderPaneMain.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -139,7 +158,7 @@ public class AccueilVisiteur implements Initializable{
 	            public void handle(MouseEvent event) {
 	            	//open only on double click
 	            	if(event.getClickCount() == 2) {  
-	            		boolean admin =MdpPage.admin;
+	            		boolean admin = MdpPage.admin;
 
 			       		if(admin) {
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/AccueilAdminInfo.fxml"));

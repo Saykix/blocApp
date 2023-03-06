@@ -40,7 +40,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Service" textFill="WHITE">
+            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" style="-fx-background-color: #1C2942;" text="Service" textFill="WHITE">
                <font>
                   <Font size="33.0" />
                </font>

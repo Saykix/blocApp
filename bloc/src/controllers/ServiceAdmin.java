@@ -23,12 +23,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class ServiceVisiteur implements Initializable{
+public class ServiceAdmin implements Initializable{
 	
 		private Parent fxml;
 
 		  @FXML
 		    private BorderPane borderPaneService;
+
+		    @FXML
+		    private Button boutonAjouterService;
 
 		    @FXML
 		    private Button boutonEmployer;
@@ -46,11 +49,27 @@ public class ServiceVisiteur implements Initializable{
 		    private TableColumn<service, String> tableServiceService;
 
 
+	    @FXML
+	    void boutonAjouterServiceClick(MouseEvent event) {
+	    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/ServiceAdminAjouter.fxml"));
+			Parent newContent;
+			try {
+				newContent = loader.load();
+				
+				
+				Scene currentScene = borderPaneService.getScene();
 
+				currentScene.setRoot(newContent);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	    
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
 	            borderPaneService.getChildren().removeAll();
 	            borderPaneService.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -66,7 +85,7 @@ public class ServiceVisiteur implements Initializable{
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
 	            borderPaneService.getChildren().removeAll();
 	            borderPaneService.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -98,9 +117,6 @@ public class ServiceVisiteur implements Initializable{
 	            	
 	            	//open only on double click
 	            	if(event.getClickCount() == 2) {   
-	            		boolean admin =MdpPage.admin;
-
-			       		if(admin) {
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/ServiceAdminInfo.fxml"));
 							Parent newContent;
 							try {
@@ -115,22 +131,6 @@ public class ServiceVisiteur implements Initializable{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-			       		}else {
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/ServiceVisiteurInfo.fxml"));
-							Parent newContent;
-							try {
-								newContent = loader.load();
-								ServiceVisiteurInfo controllerPage = loader.getController();
-								controllerPage.setData(tableService.getSelectionModel().getSelectedItem().getIdService());
-								
-								Scene currentScene = borderPaneService.getScene();
-	
-								currentScene.setRoot(newContent);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-			       		}
 
 	            	}
 	        	}         

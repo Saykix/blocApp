@@ -10,7 +10,10 @@ public class service {
 		IdService = idService;
 		this.nomService = nomService;
 	}
-	
+	public service(String nomService) {
+		super();
+		this.nomService = nomService;
+	}
 	public int getIdService() {
 		return IdService;
 	}

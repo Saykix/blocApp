@@ -19,15 +19,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class AccueilVisiteur implements Initializable{
-	private Parent fxml;
+public class AccueilAdminAjouter implements Initializable{
 
-	  @FXML
-	    private BorderPane borderPaneMain;
+		private Parent fxml;
+		@FXML
+	    private Button BoutonAjouter;
+
+	    @FXML
+	    private BorderPane borderPaneAdminAjouter;
+
+	    @FXML
+	    private Button boutonAjouterEmployer;
 
 	    @FXML
 	    private Button boutonEmployer;
@@ -37,6 +45,30 @@ public class AccueilVisiteur implements Initializable{
 
 	    @FXML
 	    private Button boutonSites;
+
+	    @FXML
+	    private ImageView closeInfo;
+
+	    @FXML
+	    private TextField email;
+
+	    @FXML
+	    private TextField fixe;
+
+	    @FXML
+	    private TextField nom;
+
+	    @FXML
+	    private TextField portable;
+
+	    @FXML
+	    private TextField prenom;
+
+	    @FXML
+	    private TextField service;
+
+	    @FXML
+	    private TextField site;
 
 	    @FXML
 	    private TableView<employer> tableEmployer;
@@ -62,6 +94,14 @@ public class AccueilVisiteur implements Initializable{
 	    @FXML
 	    private TableColumn<employer, String> tableEmployerSite;
 
+	    int id;
+	    
+	    @FXML
+	    void boutonAjouterEmployerClick(MouseEvent event) {
+	    	nom.setText("");prenom.setText("");fixe.setText("");portable.setText("");email.setText("");service.setText("");site.setText("");
+
+	    }
+	    
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
 
@@ -69,40 +109,57 @@ public class AccueilVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
-	    	boolean admin = MdpPage.admin;
-
-       		if(admin) {
-
-				try {
-					fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
-					borderPaneMain.getChildren().removeAll();
-					borderPaneMain.getChildren().setAll(fxml);
-				} catch (IOException e) {
-					e.printStackTrace();
-				} 
-				}else {
-					
-					try {
-						fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
-						borderPaneMain.getChildren().removeAll();
-						borderPaneMain.getChildren().setAll(fxml);
-					} catch (IOException e) {
-						e.printStackTrace();
-					} 
-				}
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
+	            borderPaneAdminAjouter.getChildren().removeAll();
+	            borderPaneAdminAjouter.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
-	            borderPaneMain.getChildren().removeAll();
-	            borderPaneMain.getChildren().setAll(fxml);
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
+	            borderPaneAdminAjouter.getChildren().removeAll();
+	            borderPaneAdminAjouter.getChildren().setAll(fxml);
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } 
 	    }
 	    
+	    @FXML
+	    void closeInfoClick(MouseEvent event) {
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+	            borderPaneAdminAjouter.getChildren().removeAll();
+	            borderPaneAdminAjouter.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	    }
+	    
+	    @FXML
+	    void BoutonAjouterClick(MouseEvent event) {
+	    	JSONArray Service = apiRequest.serviceGetByName(service.getText());
+	    	JSONArray Site = apiRequest.siteGetByVille(site.getText());
+	    	System.out.println(Service.getJSONObject(0).getInt("IdService"));
+	    	System.out.println(Site.getJSONObject(0).getInt("IdSite"));
+	    	employer employer = new employer(nom.getText(),prenom.getText(),fixe.getText(),portable.getText(),email.getText(),Service.getJSONObject(0).getInt("IdService"), Site.getJSONObject(0).getInt("IdSite"));
+	    	try {
+				apiRequest.employerPost(employer);
+				nom.setText("");prenom.setText("");fixe.setText("");portable.setText("");email.setText("");service.setText("");site.setText("");
+				createTableau();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    
+
 		public static ObservableList<employer> getDataEmployer(){
 			JSONArray employes = apiRequest.employerGet();
 			ObservableList<employer> list = FXCollections.observableArrayList();
@@ -121,6 +178,7 @@ public class AccueilVisiteur implements Initializable{
 		return list;
 			
 		}
+	
 		
 		public void createTableau() {
 			tableEmployerNom.setCellValueFactory(new PropertyValueFactory<employer,String>("nom"));
@@ -132,52 +190,30 @@ public class AccueilVisiteur implements Initializable{
 			tableEmployerSite.setCellValueFactory(new PropertyValueFactory<employer,String>("employerSite"));
 			
 			tableEmployer.setItems(getDataEmployer());
-				// open crud popup
 			tableEmployer.setOnMouseClicked(new EventHandler<MouseEvent>(){
-			
+				
 	            @Override
 	            public void handle(MouseEvent event) {
 	            	//open only on double click
 	            	if(event.getClickCount() == 2) {  
-	            		boolean admin =MdpPage.admin;
+	            		FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/AccueilAdminInfo.fxml"));
+						Parent newContent;
+						try {
+							newContent = loader.load();
+							AccueilAdminInfo controllerPage = loader.getController();
+							controllerPage.setData(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
+							
+							Scene currentScene = borderPaneAdminAjouter.getScene();
 
-			       		if(admin) {
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/AccueilAdminInfo.fxml"));
-							Parent newContent;
-							try {
-								newContent = loader.load();
-								AccueilAdminInfo controllerPage = loader.getController();
-								controllerPage.setData(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
-								
-								Scene currentScene = borderPaneMain.getScene();
-	
-								currentScene.setRoot(newContent);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-			       		}else {
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/AccueilVisiteurInfo.fxml"));
-							Parent newContent;
-							try {
-								newContent = loader.load();
-								AccueilVisiteurInfo controllerPage = loader.getController();
-								controllerPage.setData(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
-								
-								Scene currentScene = borderPaneMain.getScene();
-	
-								currentScene.setRoot(newContent);
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-			       		}	
-
+							currentScene.setRoot(newContent);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 	            	}
-	        	}         
-			});
+	            }   
+	        });
 		}
-		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		createTableau();

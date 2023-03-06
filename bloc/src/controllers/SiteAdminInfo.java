@@ -19,30 +19,44 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 
-public class SiteVisiteurInfo implements Initializable{
+public class SiteAdminInfo implements Initializable{
 
 		private Parent fxml;
-		@FXML
-	    private BorderPane borderPaneSiteInfo;
+		 @FXML
+		    private Button BoutonModifier;
 
-	    @FXML
-	    private Button boutonEmployer;
+		    @FXML
+		    private Button BoutonSupprimer;
 
-	    @FXML
-	    private Button boutonService;
+		    @FXML
+		    private TextField adresse;
 
-	    @FXML
-	    private Button boutonSites;
+		    @FXML
+		    private BorderPane borderPaneSiteInfo;
 
-	    @FXML
-	    private ImageView closeInfo;
+		    @FXML
+		    private Button boutonAjouterSite;
 
+		    @FXML
+		    private Button boutonEmployer;
+
+		    @FXML
+		    private Button boutonService;
+
+		    @FXML
+		    private Button boutonSites;
+
+		    @FXML
+		    private ImageView closeInfo;
+
+		    @FXML
+		    private TextField codePostal;
 	    @FXML
 	    private TableView<site> tableSite;
 
@@ -55,19 +69,47 @@ public class SiteVisiteurInfo implements Initializable{
 	    @FXML
 	    private TableColumn<site, String> tableSiteVille;
 
-	    @FXML
-	    private Text textAdresse;
 
 	    @FXML
-	    private Text textCodePostal;
+	    private TextField ville;
+
+	    int id;
+	    
+	    @FXML
+	    void BoutonModifierClick(MouseEvent event) {
+	    	try {
+	    		site site = new site(ville.getText(),adresse.getText(),codePostal.getText());
+				apiRequest.sitePut(id,site);
+				createTableau();
+				createSiteInfo(id);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 
 	    @FXML
-	    private Text textVille;
+	    void BoutonSupprimerClick(MouseEvent event) {
+			apiRequest.siteDelete(id);
+			createTableau();
+	    }
+
+	    @FXML
+	    void boutonAjouterSiteClick(MouseEvent event) {
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdminAjouter.fxml"));
+	            borderPaneSiteInfo.getChildren().removeAll();
+	            borderPaneSiteInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	    }
+
 	    
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
 	            borderPaneSiteInfo.getChildren().removeAll();
 	            borderPaneSiteInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -78,7 +120,7 @@ public class SiteVisiteurInfo implements Initializable{
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
 	            borderPaneSiteInfo.getChildren().removeAll();
 	            borderPaneSiteInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -94,7 +136,7 @@ public class SiteVisiteurInfo implements Initializable{
 	    @FXML
 	    void closeInfoClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
 	            borderPaneSiteInfo.getChildren().removeAll();
 	            borderPaneSiteInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -119,9 +161,9 @@ public class SiteVisiteurInfo implements Initializable{
 		public void createSiteInfo(int id) {
 			JSONArray Site = apiRequest.siteGetById(id);
 			 Platform.runLater(() -> {				 
-				 textVille.setText(Site.getJSONObject(0).getString("ville"));
-				 textAdresse.setText(Site.getJSONObject(0).getString("adresse"));
-				 textCodePostal.setText(Site.getJSONObject(0).getString("codePostal"));
+				 ville.setText(Site.getJSONObject(0).getString("ville"));
+				 adresse.setText(Site.getJSONObject(0).getString("adresse"));
+				 codePostal.setText(Site.getJSONObject(0).getString("codePostal"));
 			 });
 		}
 		
@@ -151,6 +193,7 @@ public class SiteVisiteurInfo implements Initializable{
 	}
 	
 	public void setData(int id) {
+		this.id = id;
 		createSiteInfo(id);
 	}
 

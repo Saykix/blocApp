@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPaneSite" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1016.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SiteVisiteur">
+<BorderPane fx:id="borderPaneService" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1016.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServiceAdmin">
    <top>
       <Pane prefHeight="150.0" prefWidth="1920.0" style="-fx-background-color: #5FC2BA;" BorderPane.alignment="CENTER">
          <children>
@@ -32,7 +32,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="boutonSites" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#boutonSitesClick" prefHeight="104.0" prefWidth="264.0" style="-fx-background-color: #1C2942;" text="Sites" textFill="WHITE">
+            <Button fx:id="boutonSites" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#boutonSitesClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Sites" textFill="WHITE">
                <font>
                   <Font size="33.0" />
                </font>
@@ -40,9 +40,17 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Service" textFill="WHITE">
+            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" style="-fx-background-color: #1C2942;" text="Service" textFill="WHITE">
                <font>
                   <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonAjouterService" layoutX="15.0" layoutY="778.0" mnemonicParsing="false" onMouseClicked="#boutonAjouterServiceClick" prefHeight="55.0" prefWidth="235.0" styleClass="Bouton" text="Ajouter un service" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -52,11 +60,9 @@
       </Pane>
    </left>
    <center>
-      <TableView fx:id="tableSite" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableService" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="tableSiteVille" prefWidth="572.0" text="Ville" />
-          <TableColumn fx:id="tableSiteAdresse" prefWidth="530.0" text="Adresse" />
-            <TableColumn fx:id="tableSiteCodePostal" prefWidth="553.0" text="Code postal" />
+          <TableColumn fx:id="tableServiceService" prefWidth="1655.0" text="Service" />
         </columns>
       </TableView>
    </center>

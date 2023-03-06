@@ -13,6 +13,13 @@ public class site {
 		this.codePostal = codePostal;
 	}
 	
+	public site(String ville, String adresse, String codePostal) {
+		super();
+		this.ville = ville;
+		this.adresse = adresse;
+		this.codePostal = codePostal;
+	}
+	
 	public int getIdSite() {
 		return idSite;
 	}

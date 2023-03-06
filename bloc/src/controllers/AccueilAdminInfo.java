@@ -19,17 +19,27 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 
-public class AccueilVisiteurInfo implements Initializable{
+public class AccueilAdminInfo implements Initializable{
 
 		private Parent fxml;
-	  @FXML
-	    private BorderPane borderPanevisiteurInfo;
+
+	    @FXML
+	    private Button BoutonModifier;
+
+	    @FXML
+	    private Button BoutonSupprimer;
+
+	    @FXML
+	    private BorderPane borderPaneAdminInfo;
+
+	    @FXML
+	    private Button boutonAjouterEmployer;
 
 	    @FXML
 	    private Button boutonEmployer;
@@ -42,6 +52,28 @@ public class AccueilVisiteurInfo implements Initializable{
 
 	    @FXML
 	    private ImageView closeInfo;
+
+	    @FXML
+	    private TextField email;
+
+	    @FXML
+	    private TextField fixe;
+
+	    @FXML
+	    private TextField nom;
+
+	    @FXML
+	    private TextField portable;
+
+	    @FXML
+	    private TextField prenom;
+
+	    @FXML
+	    private TextField service;
+
+	    @FXML
+	    private TextField site;
+
 	    
 	    @FXML
 	    private TableView<employer> tableEmployer;
@@ -67,40 +99,64 @@ public class AccueilVisiteurInfo implements Initializable{
 	    @FXML
 	    private TableColumn<employer, String> tableEmployerSite;
 
-	    
+	    int id;
 	    @FXML
-	    private Text textEmail;
+	    void BoutonModifierClick(MouseEvent event) {
+	    	JSONArray Service = apiRequest.serviceGetByName(service.getText());
+	    	JSONArray Site = apiRequest.siteGetByVille(site.getText());
+	    	System.out.println(Service.getJSONObject(0).getInt("IdService"));
+	    	System.out.println(Site.getJSONObject(0).getInt("IdSite"));
+	    	employer employer = new employer(nom.getText(),prenom.getText(),fixe.getText(),portable.getText(),email.getText(),Service.getJSONObject(0).getInt("IdService"), Site.getJSONObject(0).getInt("IdSite"));
+	    	try {
+				apiRequest.employerPut(id, employer);
+				createTableau();
+				createEmployerInfo(id);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 
 	    @FXML
-	    private Text textFixe;
+	    void BoutonSupprimerClick(MouseEvent event) {
+	    	apiRequest.employerDelete(id);
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+	            borderPaneAdminInfo.getChildren().removeAll();
+	            borderPaneAdminInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	    }
 
 	    @FXML
-	    private Text textNom;
+	    void boutonAjouterEmployerClick(MouseEvent event) {
+	    	try {
+				fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdminAjouter.fxml"));
+				borderPaneAdminInfo.getChildren().removeAll();
+				borderPaneAdminInfo.getChildren().setAll(fxml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+	    }
 
-	    @FXML
-	    private Text textPortable;
-
-	    @FXML
-	    private Text textPrenom;
-
-	    @FXML
-	    private Text textService;
-
-	    @FXML
-	    private Text textSite;
-	    
-	    
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
-
+	    	try {
+				fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdminAjouter.fxml"));
+				borderPaneAdminInfo.getChildren().removeAll();
+				borderPaneAdminInfo.getChildren().setAll(fxml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
 	    }
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
-	            borderPanevisiteurInfo.getChildren().removeAll();
-	            borderPanevisiteurInfo.getChildren().setAll(fxml);
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
+	            borderPaneAdminInfo.getChildren().removeAll();
+	            borderPaneAdminInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } 
@@ -109,9 +165,9 @@ public class AccueilVisiteurInfo implements Initializable{
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
-	            borderPanevisiteurInfo.getChildren().removeAll();
-	            borderPanevisiteurInfo.getChildren().setAll(fxml);
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
+	            borderPaneAdminInfo.getChildren().removeAll();
+	            borderPaneAdminInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } 
@@ -120,13 +176,25 @@ public class AccueilVisiteurInfo implements Initializable{
 	    @FXML
 	    void closeInfoClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-	            borderPanevisiteurInfo.getChildren().removeAll();
-	            borderPanevisiteurInfo.getChildren().setAll(fxml);
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+	            borderPaneAdminInfo.getChildren().removeAll();
+	            borderPaneAdminInfo.getChildren().setAll(fxml);
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } 
 	    }
+	    
+	    @FXML
+	    void boutonAjouterClick(MouseEvent event) {
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdminAjouter.fxml"));
+	            borderPaneAdminInfo.getChildren().removeAll();
+	            borderPaneAdminInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
+	    }
+	    
 	    
 		public static ObservableList<employer> getDataEmployer(){
 			JSONArray employes = apiRequest.employerGet();
@@ -153,13 +221,13 @@ public class AccueilVisiteurInfo implements Initializable{
 			JSONArray employerSite = apiRequest.siteGetById(employes.getJSONObject(0).getInt("employerSite"));
 			JSONArray employerService = apiRequest.serviceGetById(employes.getJSONObject(0).getInt("employerService"));
 			 Platform.runLater(() -> {				 
-				 textNom.setText(employes.getJSONObject(0).getString("nom"));
-				 textPrenom.setText(employes.getJSONObject(0).getString("prenom"));
-				 textFixe.setText(employes.getJSONObject(0).getString("fixe"));
-				 textPortable.setText(employes.getJSONObject(0).getString("portable"));
-				 textEmail.setText(employes.getJSONObject(0).getString("email"));
-				 textService.setText(employerService.getJSONObject(0).getString("nomService"));
-				 textSite.setText(employerSite.getJSONObject(0).getString("ville"));
+				 nom.setText(employes.getJSONObject(0).getString("nom"));
+				 prenom.setText(employes.getJSONObject(0).getString("prenom"));
+				 fixe.setText(employes.getJSONObject(0).getString("fixe"));
+				 portable.setText(employes.getJSONObject(0).getString("portable"));
+				 email.setText(employes.getJSONObject(0).getString("email"));
+				 service.setText(employerService.getJSONObject(0).getString("nomService"));
+				 site.setText(employerSite.getJSONObject(0).getString("ville"));
 			 });
 		}
 		
@@ -192,6 +260,7 @@ public class AccueilVisiteurInfo implements Initializable{
 	}
 	
 	public void setData(int id) {
+		this.id=id;
 		createEmployerInfo(id);
 	}
 
