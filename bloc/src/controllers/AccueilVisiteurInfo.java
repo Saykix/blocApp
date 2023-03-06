@@ -104,7 +104,13 @@ public class AccueilVisiteurInfo implements Initializable{
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
-
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            borderPanevisiteurInfo.getChildren().removeAll();
+	            borderPanevisiteurInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 	    
 	    @FXML
@@ -137,31 +143,11 @@ public class AccueilVisiteurInfo implements Initializable{
 			
 		}
 		
-		public static ObservableList<employer> getDataEmployerID(int id){
-			JSONArray employes = apiRequest.employerGetById(id);
-			ObservableList<employer> list = FXCollections.observableArrayList();
-	
-	
-		for(int i = 0; i < employes.length(); i++) {
-			JSONArray employerSite = apiRequest.siteGetById(employes.getJSONObject(i).getInt("employerSite"));
-			JSONArray employerService = apiRequest.serviceGetById(employes.getJSONObject(i).getInt("employerService"));
-			list.add(new employer(employes.getJSONObject(i).getInt("IdEmployer"), employes.getJSONObject(i).getString("nom"),
-					employes.getJSONObject(i).getString("prenom"), employes.getJSONObject(i).getString("fixe"),
-					employes.getJSONObject(i).getString("portable"),employes.getJSONObject(i).getString("email"),
-					employerService.getJSONObject(0).getString("nomService"), employerSite.getJSONObject(0).getString("ville")
-					));
-		}
-		
-		return list;
-			
-		}
 		
 		public void createEmployerInfo(int id) {
-			System.out.println(id);
 			JSONArray employes = apiRequest.employerGetById(id);
 			JSONArray employerSite = apiRequest.siteGetById(employes.getJSONObject(0).getInt("employerSite"));
 			JSONArray employerService = apiRequest.serviceGetById(employes.getJSONObject(0).getInt("employerService"));
-			System.out.println(employes.getJSONObject(0).getString("nom"));
 			 Platform.runLater(() -> {				 
 				 textNom.setText(employes.getJSONObject(0).getString("nom"));
 				 textPrenom.setText(employes.getJSONObject(0).getString("prenom"));

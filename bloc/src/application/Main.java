@@ -15,11 +15,11 @@ public class Main extends Application {
 		try {
 			BorderPane root = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
 			Scene scene = new Scene(root);
-		  scene.setOnKeyReleased(k -> {
+		    scene.setOnKeyReleased(k -> {
 			  System.out.println("patrique");
-		    if (new KeyCodeCombination(KeyCode.ESCAPE).match(k)) {
-		    }
-		  });
+		      if (new KeyCodeCombination(KeyCode.ESCAPE).match(k)) {
+		      }
+		    });
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();

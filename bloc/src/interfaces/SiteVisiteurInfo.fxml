@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="borderPaneSiteInfo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1016.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SiteVisiteurInfo">
+   <top>
+      <Pane prefHeight="150.0" prefWidth="1920.0" style="-fx-background-color: #5FC2BA;" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="840.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Annuaire">
+               <font>
+                  <Font name="Arial" size="60.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="866.0" prefWidth="264.0" style="-fx-background-color: #3B556D;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="boutonEmployer" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#boutonEmployerClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" stylesheets="@../application/application.css" text="Employés" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonSites" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#boutonSitesClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Sites" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonService" layoutY="509.0" mnemonicParsing="false" onMouseClicked="#boutonServiceClick" prefHeight="104.0" prefWidth="264.0" styleClass="Bouton" text="Service" textFill="WHITE">
+               <font>
+                  <Font size="33.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <TableView fx:id="tableSite" prefHeight="866.0" prefWidth="1595.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="tableSiteVille" prefWidth="326.0" text="Ville" />
+            <TableColumn fx:id="tableSiteAdresse" prefWidth="592.0" text="Adresse" />
+            <TableColumn fx:id="tableSiteCodePostal" prefWidth="355.0" text="Code postal" />
+        </columns>
+      </TableView>
+   </center>
+   <right>
+      <Pane prefHeight="866.0" prefWidth="382.0" style="-fx-background-color: #3B556D;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" layoutX="14.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ville: ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="textVille" fill="WHITE" layoutX="78.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="9.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresse:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="textAdresse" fill="WHITE" layoutX="101.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="273.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="13.0" layoutY="732.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Code postal:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="textCodePostal" fill="WHITE" layoutX="150.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="closeInfo" layoutX="314.0" layoutY="14.0" onMouseClicked="#closeInfoClick">
+               <image>
+                  <Image url="@../img/outline_close_black_24dp.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="199.0" fitWidth="200.0" layoutX="91.0" layoutY="15.0">
+               <image>
+                  <Image url="@../img/site-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </right>
+</BorderPane>
