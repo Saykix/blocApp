@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 
-import Class.site;
+import Class.service;
 import application.apiRequest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,12 +23,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
-public class SiteVisiteur implements Initializable{
+public class ServiceVisiteur implements Initializable{
 	
 		private Parent fxml;
 
 		  @FXML
-		    private BorderPane borderPaneSite;
+		    private BorderPane borderPaneService;
 
 		    @FXML
 		    private Button boutonEmployer;
@@ -40,24 +40,19 @@ public class SiteVisiteur implements Initializable{
 		    private Button boutonSites;
 
 		    @FXML
-		    private TableView<site> tableSite;
+		    private TableView<service> tableService;
 
 		    @FXML
-		    private TableColumn<site, String> tableSiteAdresse;
+		    private TableColumn<service, String> tableServiceService;
 
-		    @FXML
-		    private TableColumn<site, String> tableSiteCodePostal;
-
-		    @FXML
-		    private TableColumn<site, String> tableSiteVille;
 
 
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
 	    	try {
 	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-	            borderPaneSite.getChildren().removeAll();
-	            borderPaneSite.getChildren().setAll(fxml);
+	            borderPaneService.getChildren().removeAll();
+	            borderPaneService.getChildren().setAll(fxml);
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        } 
@@ -65,29 +60,27 @@ public class SiteVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
-	            borderPaneSite.getChildren().removeAll();
-	            borderPaneSite.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+
 	    }
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
-
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            borderPaneService.getChildren().removeAll();
+	            borderPaneService.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 	    
-		public static ObservableList<site> getDataEmployer(){
-			JSONArray sites = apiRequest.siteGet();
-			ObservableList<site> list = FXCollections.observableArrayList();
+		public static ObservableList<service> getDataService(){
+			JSONArray services = apiRequest.serviceGet();
+			ObservableList<service> list = FXCollections.observableArrayList();
 	
 	
-		for(int i = 0; i < sites.length(); i++) {
-			list.add(new site(sites.getJSONObject(i).getInt("IdSite"), sites.getJSONObject(i).getString("ville"),
-					sites.getJSONObject(i).getString("adresse"), sites.getJSONObject(i).getString("codePostal")
-					));
+		for(int i = 0; i < services.length(); i++) {
+			list.add(new service(services.getJSONObject(i).getInt("IdService"), services.getJSONObject(i).getString("nomService")));
 		}
 		
 		return list;
@@ -95,30 +88,28 @@ public class SiteVisiteur implements Initializable{
 		}
 		
 		public void createTableau() {
-			tableSiteVille.setCellValueFactory(new PropertyValueFactory<site,String>("ville"));
-			tableSiteAdresse.setCellValueFactory(new PropertyValueFactory<site,String>("adresse"));
-			tableSiteCodePostal.setCellValueFactory(new PropertyValueFactory<site,String>("codePostal"));
+			tableServiceService.setCellValueFactory(new PropertyValueFactory<service,String>("nomService"));
 			
-			tableSite.setItems(getDataEmployer());
+			tableService.setItems(getDataService());
 				// open crud popup
-			tableSite.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			tableService.setOnMouseClicked(new EventHandler<MouseEvent>(){
 			
 	            @Override
 	            public void handle(MouseEvent event) {
 	            	//open only on double click
 	            	if(event.getClickCount() == 2) {   
 //	            			
-	            		FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/SiteVisiteurInfo.fxml"));
+	            		FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/ServiceVisiteurInfo.fxml"));
 	            		Parent newContent;
 						try {
 							newContent = loader.load();
 							// Obtenir le contrôleur associé à la vue
-							SiteVisiteurInfo controller = loader.getController();
-							controller.setData(tableSite.getSelectionModel().getSelectedItem().getIdSite());
+							ServiceVisiteurInfo controller = loader.getController();
+							controller.setData(tableService.getSelectionModel().getSelectedItem().getIdService());
 							
 							// Remplacer le contenu de la scène actuelle par le nouveau contenu
 							// Obtenir la scène actuelle
-							Scene currentScene = tableSite.getScene();
+							Scene currentScene = tableService.getScene();
 
 							// Remplacer la racine de la scène actuelle par le nouveau contenu
 							currentScene.setRoot(newContent);

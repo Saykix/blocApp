@@ -69,13 +69,19 @@ public class AccueilVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
-
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            borderPaneMain.getChildren().removeAll();
+	            borderPaneMain.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
 	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
 	            borderPaneMain.getChildren().removeAll();
 	            borderPaneMain.getChildren().setAll(fxml);
 	        } catch (IOException e) {
@@ -146,8 +152,6 @@ public class AccueilVisiteur implements Initializable{
 		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		JSONArray employes = apiRequest.employerGet();
-//		System.out.println(employes);
 		createTableau();
 	}
 

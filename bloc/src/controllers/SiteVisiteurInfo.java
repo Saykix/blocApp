@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,7 +24,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class SiteVisiteurInfo implements Initializable{
 
@@ -79,7 +77,13 @@ public class SiteVisiteurInfo implements Initializable{
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
-
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
+	            borderPaneSiteInfo.getChildren().removeAll();
+	            borderPaneSiteInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 
 	    @FXML
@@ -144,24 +148,7 @@ public class SiteVisiteurInfo implements Initializable{
 		}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//		JSONArray employes = apiRequest.employerGet();
-//		System.out.println(employes);
 		createTableau();
-		FXMLLoader Loader = new FXMLLoader();
-		Loader.setLocation(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-		try {
-			Loader.load();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		
-	
-		Loader.getController();
-		
-		Parent p = Loader.getRoot();
-		Stage stage = new Stage();
-		stage.setScene(new Scene(p));
-		stage.close();
 	}
 	
 	public void setData(int id) {
