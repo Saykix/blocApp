@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -7,10 +8,15 @@ import org.json.JSONArray;
 
 import Class.employer;
 import application.apiRequest;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,9 +25,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class AccueilVisiteurInfo implements Initializable{
 
+		private Parent fxml;
 	  @FXML
 	    private BorderPane borderPanevisiteurInfo;
 
@@ -101,7 +109,13 @@ public class AccueilVisiteurInfo implements Initializable{
 	    
 	    @FXML
 	    void closeInfoClick(MouseEvent event) {
-
+	    	try {
+	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	            borderPanevisiteurInfo.getChildren().removeAll();
+	            borderPanevisiteurInfo.getChildren().setAll(fxml);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } 
 	    }
 	    
 		public static ObservableList<employer> getDataEmployer(){
@@ -143,16 +157,20 @@ public class AccueilVisiteurInfo implements Initializable{
 		}
 		
 		public void createEmployerInfo(int id) {
+			System.out.println(id);
 			JSONArray employes = apiRequest.employerGetById(id);
 			JSONArray employerSite = apiRequest.siteGetById(employes.getJSONObject(0).getInt("employerSite"));
 			JSONArray employerService = apiRequest.serviceGetById(employes.getJSONObject(0).getInt("employerService"));
-			textNom.setText(employes.getJSONObject(0).getString("nom"));
-			textPrenom.setText(employes.getJSONObject(0).getString("prenom"));
-			textFixe.setText(employes.getJSONObject(0).getString("fixe"));
-			textPortable.setText(employes.getJSONObject(0).getString("portable"));
-			textEmail.setText(employes.getJSONObject(0).getString("email"));
-			textService.setText(employerService.getJSONObject(0).getString("nomService"));
-			textSite.setText(employerSite.getJSONObject(0).getString("ville"));
+			System.out.println(employes.getJSONObject(0).getString("nom"));
+			 Platform.runLater(() -> {				 
+				 textNom.setText(employes.getJSONObject(0).getString("nom"));
+				 textPrenom.setText(employes.getJSONObject(0).getString("prenom"));
+				 textFixe.setText(employes.getJSONObject(0).getString("fixe"));
+				 textPortable.setText(employes.getJSONObject(0).getString("portable"));
+				 textEmail.setText(employes.getJSONObject(0).getString("email"));
+				 textService.setText(employerService.getJSONObject(0).getString("nomService"));
+				 textSite.setText(employerSite.getJSONObject(0).getString("ville"));
+			 });
 		}
 		
 		
@@ -166,50 +184,38 @@ public class AccueilVisiteurInfo implements Initializable{
 			tableEmployerSite.setCellValueFactory(new PropertyValueFactory<employer,String>("employerSite"));
 			
 			tableEmployer.setItems(getDataEmployer());
-				// open crud popup
-//			tableEmployer.setOnMouseClicked(new EventHandler<MouseEvent>(){
-//				
-//	            @Override
-//	            public void handle(MouseEvent event) {
-//	            	//open only on double click
-//	            	if(event.getClickCount() == 2) {            		
-//	            		FXMLLoader Loader = new FXMLLoader();
-//	            		Loader.setLocation(getClass().getResource("/interfaces/CrudVin.fxml"));
-//	            		try {
-//	            			Loader.load();
-//	            		} catch (IOException ex) {
-//	            			ex.printStackTrace();
-//	            		}
-//	            		
-//	            		CrudArticle CrudArticle = Loader.getController();
-//	            		
-//	            		CrudArticle.setData(tableArticles.getSelectionModel().getSelectedItem().getId(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getNom(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getReference(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getAnnee(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getFamille(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getPrixUnitaire(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getPrixCarton(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getPrixFournisseur(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getCoutStockage(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getTva(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getDomaine(),
-//	            					tableArticles.getSelectionModel().getSelectedItem().getDescription()
-//	            				);
-//	            		Parent p = Loader.getRoot();
-//	            		Stage stage = new Stage();
-//	            		stage.setScene(new Scene(p));
-//	            		stage.show();
-//	            	}
-//	            	}
-//	                    
-//	        });
+			tableEmployer.setOnMouseClicked(new EventHandler<MouseEvent>(){
+				
+	            @Override
+	            public void handle(MouseEvent event) {
+	            	//open only on double click
+	            	if(event.getClickCount() == 2) {            		
+	            		createEmployerInfo(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
+	            	
+	            	}
+	            }   
+	        });
 		}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 //		JSONArray employes = apiRequest.employerGet();
 //		System.out.println(employes);
 		createTableau();
+		FXMLLoader Loader = new FXMLLoader();
+		Loader.setLocation(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+		try {
+			Loader.load();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+	
+		Loader.getController();
+		
+		Parent p = Loader.getRoot();
+		Stage stage = new Stage();
+		stage.setScene(new Scene(p));
+		stage.close();
 	}
 	
 	public void setData(int id) {

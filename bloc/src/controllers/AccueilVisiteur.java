@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +28,8 @@ import javafx.stage.Stage;
 public class AccueilVisiteur implements Initializable{
 	
 		private Parent fxml;
-		
+		private Stage currentStage;
+
 	  @FXML
 	    private BorderPane borderPaneMain;
 
@@ -110,27 +112,36 @@ public class AccueilVisiteur implements Initializable{
 			tableEmployer.setItems(getDataEmployer());
 				// open crud popup
 			tableEmployer.setOnMouseClicked(new EventHandler<MouseEvent>(){
-				
-				@Override
+			
+	            @Override
 	            public void handle(MouseEvent event) {
 	            	//open only on double click
-	            	if(event.getClickCount() == 2) {            		
-	            		 try {
-							fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteurInfo.fxml"));
-//							AccueilVisiteurInfo AccueilVisiteurInfo = new AccueilVisiteurInfo();
-//							AccueilVisiteurInfo.setData(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
+	            	if(event.getClickCount() == 2) {   
+//	            			
+	            		FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/AccueilVisiteurInfo.fxml"));
+	            		Parent newContent;
+						try {
+							newContent = loader.load();
+							// Obtenir le contrôleur associé à la vue
+							AccueilVisiteurInfo controller = loader.getController();
+							controller.setData(tableEmployer.getSelectionModel().getSelectedItem().getIdEmployer());
+							
+							// Remplacer le contenu de la scène actuelle par le nouveau contenu
+							// Obtenir la scène actuelle
+							Scene currentScene = borderPaneMain.getScene();
 
-							borderPaneMain.getChildren().removeAll();
-							borderPaneMain.getChildren().setAll(fxml);
+							// Remplacer la racine de la scène actuelle par le nouveau contenu
+							currentScene.setRoot(newContent);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+
 	            	}
-	            	}
-	                    
-	        });
+	        	}         
+			});
 		}
+		
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 //		JSONArray employes = apiRequest.employerGet();
