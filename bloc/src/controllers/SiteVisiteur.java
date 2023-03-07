@@ -54,24 +54,45 @@ public class SiteVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-	            borderPaneSite.getChildren().removeAll();
-	            borderPaneSite.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+		    	try {
+		            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+		            borderPaneSite.getChildren().removeAll();
+		            borderPaneSite.getChildren().setAll(fxml);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        } 
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	    			borderPaneSite.getChildren().removeAll();
+	    			borderPaneSite.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 
 	    @FXML
 	    void boutonServiceClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
-	            borderPaneSite.getChildren().removeAll();
-	            borderPaneSite.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
+	    			borderPaneSite.getChildren().removeAll();
+	    			borderPaneSite.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
+	    			borderPaneSite.getChildren().removeAll();
+	    			borderPaneSite.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 
 	    @FXML
@@ -107,25 +128,47 @@ public class SiteVisiteur implements Initializable{
 	            public void handle(MouseEvent event) {
 	            	//open only on double click
 	            	if(event.getClickCount() == 2) {   
-//	            			
-	            		FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/SiteVisiteurInfo.fxml"));
-	            		Parent newContent;
-						try {
-							newContent = loader.load();
-							// Obtenir le contrôleur associé à la vue
-							SiteVisiteurInfo controller = loader.getController();
-							controller.setData(tableSite.getSelectionModel().getSelectedItem().getIdSite());
-							
-							// Remplacer le contenu de la scène actuelle par le nouveau contenu
-							// Obtenir la scène actuelle
-							Scene currentScene = tableSite.getScene();
+	            		if(MdpPage.admin) {
+	            			FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/SiteAdminInfo.fxml"));
+	            			Parent newContent;
+	            			try {
+	            				newContent = loader.load();
+	            				// Obtenir le contrôleur associé à la vue
+	            				SiteVisiteurInfo controller = loader.getController();
+	            				controller.setData(tableSite.getSelectionModel().getSelectedItem().getIdSite());
+	            				
+	            				// Remplacer le contenu de la scène actuelle par le nouveau contenu
+	            				// Obtenir la scène actuelle
+	            				Scene currentScene = tableSite.getScene();
+	            				
+	            				// Remplacer la racine de la scène actuelle par le nouveau contenu
+	            				currentScene.setRoot(newContent);
+	            			} catch (IOException e) {
+	            				// TODO Auto-generated catch block
+	            				e.printStackTrace();
+	            			}
 
-							// Remplacer la racine de la scène actuelle par le nouveau contenu
-							currentScene.setRoot(newContent);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+	            		}else {	            			
+	            			FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfaces/SiteVisiteurInfo.fxml"));
+	            			Parent newContent;
+	            			try {
+	            				newContent = loader.load();
+	            				// Obtenir le contrôleur associé à la vue
+	            				SiteVisiteurInfo controller = loader.getController();
+	            				controller.setData(tableSite.getSelectionModel().getSelectedItem().getIdSite());
+	            				
+	            				// Remplacer le contenu de la scène actuelle par le nouveau contenu
+	            				// Obtenir la scène actuelle
+	            				Scene currentScene = tableSite.getScene();
+	            				
+	            				// Remplacer la racine de la scène actuelle par le nouveau contenu
+	            				currentScene.setRoot(newContent);
+	            			} catch (IOException e) {
+	            				// TODO Auto-generated catch block
+	            				e.printStackTrace();
+	            			}
+	            		}
+//	            			
 
 	            	}
 	        	}         

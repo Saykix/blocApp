@@ -49,13 +49,23 @@ public class ServiceVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-	            borderPaneService.getChildren().removeAll();
-	            borderPaneService.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+	    			borderPaneService.getChildren().removeAll();
+	    			borderPaneService.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	    			borderPaneService.getChildren().removeAll();
+	    			borderPaneService.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 
 	    @FXML
@@ -65,13 +75,23 @@ public class ServiceVisiteur implements Initializable{
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
-	            borderPaneService.getChildren().removeAll();
-	            borderPaneService.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
+	    			borderPaneService.getChildren().removeAll();
+	    			borderPaneService.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	    			borderPaneService.getChildren().removeAll();
+	    			borderPaneService.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 	    
 		public static ObservableList<service> getDataService(){

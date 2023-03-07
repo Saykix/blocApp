@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import controllers.MdpPage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +35,7 @@ public class Main extends Application {
 		    	keyPressed.add(k.getCode().toString());
 			  if(keyPressed.size() > codePass.size()) {
 				  keyPressed.clear();
-			  }else if(codePass.stream().allMatch(keyPressed::contains)){
+			  }else if(codePass.stream().allMatch(keyPressed::contains) && !MdpPage.admin){
           		FXMLLoader Loader = new FXMLLoader();
           		Loader.setLocation(getClass().getResource("/interfaces/MdpPage.fxml"));
           		try {

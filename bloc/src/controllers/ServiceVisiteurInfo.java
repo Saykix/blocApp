@@ -55,13 +55,23 @@ public class ServiceVisiteurInfo implements Initializable{
 	    
 	    @FXML
 	    void boutonEmployerClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
-	            borderPaneServiceInfo.getChildren().removeAll();
-	            borderPaneServiceInfo.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+		    	try {
+		            fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilAdmin.fxml"));
+		            borderPaneServiceInfo.getChildren().removeAll();
+		            borderPaneServiceInfo.getChildren().setAll(fxml);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        } 
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/AccueilVisiteur.fxml"));
+	    			borderPaneServiceInfo.getChildren().removeAll();
+	    			borderPaneServiceInfo.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 
 	    @FXML
@@ -71,24 +81,45 @@ public class ServiceVisiteurInfo implements Initializable{
 
 	    @FXML
 	    void boutonSitesClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
-	            borderPaneServiceInfo.getChildren().removeAll();
-	            borderPaneServiceInfo.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteAdmin.fxml"));
+	    			borderPaneServiceInfo.getChildren().removeAll();
+	    			borderPaneServiceInfo.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		}  		
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/SiteVisiteur.fxml"));
+	    			borderPaneServiceInfo.getChildren().removeAll();
+	    			borderPaneServiceInfo.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 	    
 	    @FXML
 	    void closeInfoClick(MouseEvent event) {
-	    	try {
-	            fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
-	            borderPaneServiceInfo.getChildren().removeAll();
-	            borderPaneServiceInfo.getChildren().setAll(fxml);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } 
+	    	if(MdpPage.admin) {
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceAdmin.fxml"));
+	    			borderPaneServiceInfo.getChildren().removeAll();
+	    			borderPaneServiceInfo.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+
+	    	}else {	    		
+	    		try {
+	    			fxml = FXMLLoader.load(getClass().getResource("/interfaces/ServiceVisiteur.fxml"));
+	    			borderPaneServiceInfo.getChildren().removeAll();
+	    			borderPaneServiceInfo.getChildren().setAll(fxml);
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		} 
+	    	}
 	    }
 	    
 		public static ObservableList<service> getDataService(){

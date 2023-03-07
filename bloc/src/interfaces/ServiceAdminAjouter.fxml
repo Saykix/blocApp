@@ -51,7 +51,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="boutonAjouterService" layoutX="15.0" layoutY="778.0" mnemonicParsing="false" onMouseClicked="#boutonAjouterServiceClick" prefHeight="55.0" prefWidth="235.0" styleClass="Bouton" text="Ajouter un service" textFill="WHITE">
+            <Button fx:id="boutonAjouterService" layoutX="-9.0" layoutY="778.0" mnemonicParsing="false" onMouseClicked="#boutonAjouterServiceClick" prefHeight="55.0" prefWidth="278.0" styleClass="Bouton" text="Ajouter un service" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>

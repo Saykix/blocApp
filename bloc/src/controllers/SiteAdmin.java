@@ -125,15 +125,11 @@ public class SiteAdmin implements Initializable{
 	            		Parent newContent;
 						try {
 							newContent = loader.load();
-							// Obtenir le contrôleur associé à la vue
 							SiteAdminInfo controller = loader.getController();
 							controller.setData(tableSite.getSelectionModel().getSelectedItem().getIdSite());
 							
-							// Remplacer le contenu de la scène actuelle par le nouveau contenu
-							// Obtenir la scène actuelle
 							Scene currentScene = tableSite.getScene();
 
-							// Remplacer la racine de la scène actuelle par le nouveau contenu
 							currentScene.setRoot(newContent);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
